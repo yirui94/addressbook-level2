@@ -12,6 +12,7 @@ public class Address {
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = 
             "Person addresses must be block number, street, unit number and postal code each separated by a comma.";
     public static final String ADDRESS_VALIDATION_REGEX = "\\d{3},\\s*.+,\\s*#\\d{2}-\\d{1,3},\\s*\\d{6}";
+    public static final String ADDRESS_PROPERTY_DELIMITER = ", ";
     public static enum ADDRESS_PROPERTY { BLOCK, STREET, UNIT, POSTALCODE };
 
     private final Block block;
@@ -27,6 +28,7 @@ public class Address {
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         String trimmedAddress = address.trim();
+        // Extract address components without leading and trailing spaces
         String[] addressComponents = trimmedAddress.split("\\s*,\\s*");
         this.isPrivate = isPrivate;
         if (!isValidAddress(trimmedAddress)) {
@@ -48,20 +50,54 @@ public class Address {
 
     @Override
     public String toString() {
-        return block.toString() + ", " + street.toString() + ", " 
-                + unit.toString() + ", " + postalCode.toString();
+        return block.toString() + ADDRESS_PROPERTY_DELIMITER + street.toString() + ADDRESS_PROPERTY_DELIMITER
+                + unit.toString() + ADDRESS_PROPERTY_DELIMITER + postalCode.toString();
     }
 
     @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && this.toString().equals(((Address) other).toString())); // state check
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Address other = (Address) obj;
+        if (block == null) {
+            if (other.block != null)
+                return false;
+        } else if (!block.equals(other.block))
+            return false;
+        if (isPrivate != other.isPrivate)
+            return false;
+        if (postalCode == null) {
+            if (other.postalCode != null)
+                return false;
+        } else if (!postalCode.equals(other.postalCode))
+            return false;
+        if (street == null) {
+            if (other.street != null)
+                return false;
+        } else if (!street.equals(other.street))
+            return false;
+        if (unit == null) {
+            if (other.unit != null)
+                return false;
+        } else if (!unit.equals(other.unit))
+            return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((block == null) ? 0 : block.hashCode());
+        result = prime * result + (isPrivate ? 1231 : 1237);
+        result = prime * result + ((postalCode == null) ? 0 : postalCode.hashCode());
+        result = prime * result + ((street == null) ? 0 : street.hashCode());
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        return result;
     }
 
     public boolean isPrivate() {
