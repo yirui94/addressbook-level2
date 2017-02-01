@@ -9,6 +9,7 @@ import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.ui.TextUi;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +68,9 @@ public class Main {
              * =======================================================================================================
              */
             throw new RuntimeException(e);
+        } catch (FileNotFoundException fnfe) {
+            ui.showToUser(fnfe.getMessage());
+            throw new RuntimeException(fnfe);
         }
     }
 
