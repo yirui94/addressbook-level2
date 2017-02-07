@@ -31,19 +31,17 @@ public class NameTest {
     }
     
     @Test
-    public void isNameSimilar() {
+    public void nameShouldNotBeSimilarTest() {
         // null object
         assertFalse(name.isSimilar(null));
-        
-        // lower case name
-        assertTrue(name.isSimilar(lowerCaseName));
-        
-        // upper case name
-        assertTrue(name.isSimilar(upperCaseName));
-        
-        // mixed case name
-        assertTrue(name.isSimilar(mixedCaseName));
-        
+                
+        // different name
+        assertFalse(name.isSimilar(otherName));
+
+    }
+
+    @Test
+    public void nameShouldBeSimilarRegardlessOfSetOrOrder() {
         // subset name regardless of case and spaces
         assertTrue(name.isSimilar(subsetName));
         
@@ -52,10 +50,18 @@ public class NameTest {
         
         // same name but in different order
         assertTrue(name.isSimilar(unorderedName));
-        
-        // different name
-        assertFalse(name.isSimilar(otherName));
+    }
 
+    @Test
+    public void nameShouldBeSimilarRegardlessOfCase() {
+        // lower case name
+        assertTrue(name.isSimilar(lowerCaseName));
+        
+        // upper case name
+        assertTrue(name.isSimilar(upperCaseName));
+        
+        // mixed case name
+        assertTrue(name.isSimilar(mixedCaseName));
     }
 
 }

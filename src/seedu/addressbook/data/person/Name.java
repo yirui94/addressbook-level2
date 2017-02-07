@@ -62,21 +62,20 @@ public class Name {
     
     /**
      * Returns true of the other name is very similar to this name.
-     * Two names are considered similar if ...
+     * Two names are considered similar if they are supersets/subsets of each other,
+     * regardless of their case, spacings or order of words
      */
     public boolean isSimilar(Name other) {
         if (other == null) {
             return false;
-        } else if (this.toString().toLowerCase().replaceAll("\\s", "")
-                    .contains(other.toString().toLowerCase().replaceAll("\\s", ""))) {
-            return true;
-        } else if (other.toString().toLowerCase().replaceAll("\\s", "")
-                    .contains(this.toString().toLowerCase().replaceAll("\\s", ""))) {
-            return true;
-        } else if (this.getWordsInName().containsAll(other.getWordsInName())) {
-            return true;
         } else {
-            return this.toString().equalsIgnoreCase(other.toString());
+            String thisNameString = this.toString().toLowerCase().replaceAll("\\s", "");
+            String otherNameString = other.toString().toLowerCase().replaceAll("\\s", "");
+                    
+            return thisNameString.contains(otherNameString)
+                    || otherNameString.contains(thisNameString) 
+                    || this.getWordsInName().containsAll(other.getWordsInName())
+                    || this.toString().equalsIgnoreCase(other.toString());
         }
     }
 
