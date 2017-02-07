@@ -111,6 +111,7 @@ public class UniquePersonList implements Iterable<Person> {
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
+        Person.decrementSequenceNumber();
     }
 
     /**

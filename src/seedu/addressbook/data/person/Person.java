@@ -14,6 +14,10 @@ public class Person implements ReadOnlyPerson {
     private Phone phone;
     private Email email;
     private Address address;
+    private int sequenceNumber;
+    
+    private static final int BEGINNING_SEQUENCE_NUMBER = 1;
+    private static int nextSequenceNumber = BEGINNING_SEQUENCE_NUMBER;
 
     private final UniqueTagList tags;
     /**
@@ -25,6 +29,11 @@ public class Person implements ReadOnlyPerson {
         this.email = email;
         this.address = address;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+        initialiseSequenceNumber();
+    }
+
+    private void initialiseSequenceNumber() {
+        this.sequenceNumber = Person.nextSequenceNumber++;
     }
 
     /**
@@ -33,7 +42,19 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
     }
+    
+    /**
+     * Class-level method to update Sequence Number when deleting a Person object
+     */
+    public static void decrementSequenceNumber() {
+        Person.nextSequenceNumber--;
+    }
 
+    @Override
+    public int getSequenceNumber() {
+        return sequenceNumber;
+    }
+    
     @Override
     public Name getName() {
         return name;
