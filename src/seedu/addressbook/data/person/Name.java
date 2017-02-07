@@ -67,9 +67,11 @@ public class Name {
     public boolean isSimilar(Name other) {
         if (other == null) {
             return false;
-        } else if (this.toString().contains(other.toString())) {
+        } else if (this.toString().toLowerCase().replaceAll("\\s", "")
+                    .contains(other.toString().toLowerCase().replaceAll("\\s", ""))) {
             return true;
-        } else if (other.toString().contains(this.toString())) {
+        } else if (other.toString().toLowerCase().replaceAll("\\s", "")
+                    .contains(this.toString().toLowerCase().replaceAll("\\s", ""))) {
             return true;
         } else {
             return this.toString().equalsIgnoreCase(other.toString());

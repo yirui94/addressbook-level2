@@ -22,8 +22,8 @@ public class NameTest {
         this.lowerCaseName = new Name("john k smith");
         this.upperCaseName = new Name("JOHN K SMITH");
         this.mixedCaseName = new Name("JoHn K sMiTh");
-        this.subsetName = new Name("John");
-        this.supersetName = new Name("John K Smith Trump");
+        this.subsetName = new Name(" JoHn ");
+        this.supersetName = new Name("JoHn  k  Smith  TRUMP");
     }
     
     @Test
@@ -40,10 +40,10 @@ public class NameTest {
         // mixed case name
         assertTrue(name.isSimilar(mixedCaseName));
         
-        // subset name
+        // subset name regardless of case and spaces
         assertTrue(name.isSimilar(subsetName));
         
-        // superset name
+        // superset name regardless of case and spaces
         assertTrue(name.isSimilar(supersetName));
 
     }
