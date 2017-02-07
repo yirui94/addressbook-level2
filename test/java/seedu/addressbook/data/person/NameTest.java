@@ -15,6 +15,7 @@ public class NameTest {
     private Name subsetName;
     private Name mixedCaseName;
     private Name supersetName;
+    private Name unorderedName;
     
     @Before
     public void initialiseTest() throws IllegalValueException {
@@ -24,6 +25,7 @@ public class NameTest {
         this.mixedCaseName = new Name("JoHn K sMiTh");
         this.subsetName = new Name(" JoHn ");
         this.supersetName = new Name("JoHn  k  Smith  TRUMP");
+        this.unorderedName = new Name("Smith John");
     }
     
     @Test
@@ -45,6 +47,9 @@ public class NameTest {
         
         // superset name regardless of case and spaces
         assertTrue(name.isSimilar(supersetName));
+        
+        // same name but in different order
+        assertTrue(name.isSimilar(unorderedName));
 
     }
 

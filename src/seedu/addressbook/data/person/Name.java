@@ -73,6 +73,8 @@ public class Name {
         } else if (other.toString().toLowerCase().replaceAll("\\s", "")
                     .contains(this.toString().toLowerCase().replaceAll("\\s", ""))) {
             return true;
+        } else if (this.getWordsInName().containsAll(other.getWordsInName())) {
+            return true;
         } else {
             return this.toString().equalsIgnoreCase(other.toString());
         }
